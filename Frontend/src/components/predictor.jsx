@@ -54,14 +54,14 @@ const Predictor = () => {
   };
 
   return (
-    <div className="min-h-screen bg-black flex items-center justify-center p-5">
-      <div className="w-full max-w-lg bg-zinc-900 border border-zinc-800 rounded-3xl shadow-2xl p-8">
+    <div className="min-h-screen bg-background flex items-center justify-center p-5">
+      <div className="w-full max-w-lg bg-card border border-border rounded-3xl shadow-sm p-8">
 
-        <h1 className="text-4xl font-bold text-center text-white mb-2">
+        <h1 className="text-4xl font-bold text-center text-foreground mb-2">
           IPL AI Predictor
         </h1>
 
-        <p className="text-zinc-400 text-center mb-8">
+        <p className="text-muted-foreground text-center mb-8">
           Predict match winner using AI
         </p>
 
@@ -69,7 +69,7 @@ const Predictor = () => {
 
           {/* Team 1 */}
           <div>
-            <label className="block text-zinc-300 mb-2 font-medium">
+            <label className="block text-foreground mb-2 font-medium">
               Team 1
             </label>
 
@@ -78,7 +78,7 @@ const Predictor = () => {
               onChange={(e) =>
                 setForm({ ...form, team1: e.target.value })
               }
-              className="w-full bg-zinc-800 text-white p-4 rounded-xl border border-zinc-700 focus:outline-none focus:ring-2 focus:ring-red-500"
+              className="w-full bg-background text-foreground p-4 rounded-xl border border-border focus:outline-none focus:ring-2 focus:ring-red-500"
               required
             >
               <option value="">Select Team 1</option>
@@ -93,7 +93,7 @@ const Predictor = () => {
 
           {/* Team 2 */}
           <div>
-            <label className="block text-zinc-300 mb-2 font-medium">
+            <label className="block text-foreground mb-2 font-medium">
               Team 2
             </label>
 
@@ -102,7 +102,7 @@ const Predictor = () => {
               onChange={(e) =>
                 setForm({ ...form, team2: e.target.value })
               }
-              className="w-full bg-zinc-800 text-white p-4 rounded-xl border border-zinc-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full bg-background text-foreground p-4 rounded-xl border border-border focus:outline-none focus:ring-2 focus:ring-blue-500"
               required
             >
               <option value="">Select Team 2</option>
@@ -117,7 +117,7 @@ const Predictor = () => {
 
           {/* Venue */}
           <div>
-            <label className="block text-zinc-300 mb-2 font-medium">
+            <label className="block text-foreground mb-2 font-medium">
               Venue
             </label>
 
@@ -126,7 +126,7 @@ const Predictor = () => {
               onChange={(e) =>
                 setForm({ ...form, venue: e.target.value })
               }
-              className="w-full bg-zinc-800 text-white p-4 rounded-xl border border-zinc-700 focus:outline-none focus:ring-2 focus:ring-yellow-500"
+              className="w-full bg-background text-foreground p-4 rounded-xl border border-border focus:outline-none focus:ring-2 focus:ring-yellow-500"
               required
             >
               <option value="">Select Venue</option>
@@ -141,7 +141,7 @@ const Predictor = () => {
 
           {/* Toss Decision */}
           <div>
-            <label className="block text-zinc-300 mb-2 font-medium">
+            <label className="block text-foreground mb-2 font-medium">
               Toss Decision
             </label>
 
@@ -150,7 +150,7 @@ const Predictor = () => {
               onChange={(e) =>
                 setForm({ ...form, toss_decision: e.target.value })
               }
-              className="w-full bg-zinc-800 text-white p-4 rounded-xl border border-zinc-700 focus:outline-none focus:ring-2 focus:ring-green-500"
+              className="w-full bg-background text-foreground p-4 rounded-xl border border-border focus:outline-none focus:ring-2 focus:ring-green-500"
             >
               <option value="bat">Bat First</option>
               <option value="field">Field First</option>
@@ -169,46 +169,46 @@ const Predictor = () => {
 
         {/* Prediction Result */}
         {prediction && (
-          <div className="mt-8 bg-zinc-800 rounded-2xl p-6 border border-zinc-700">
+          <div className="mt-8 bg-muted/50 rounded-2xl p-6 border border-border">
 
-            <h2 className="text-2xl font-bold text-green-400 text-center mb-4">
+            <h2 className="text-2xl font-bold text-green-600 text-center mb-4">
               🏆 {prediction.winner}
             </h2>
 
             <div className="space-y-4">
 
               <div>
-                <div className="flex justify-between text-sm text-zinc-300 mb-1">
+                <div className="flex justify-between text-sm text-muted-foreground mb-1">
                   <span>{form.team1}</span>
                   <span>{(prediction.prob_a * 100).toFixed(1)}%</span>
                 </div>
 
-                <div className="w-full bg-zinc-700 rounded-full h-3">
+                <div className="w-full bg-border rounded-full h-3">
                   <div
-                    className="bg-red-500 h-3 rounded-full"
+                    className="bg-red-500 h-3 rounded-full transition-all duration-500"
                     style={{ width: `${prediction.prob_a * 100}%` }}
                   ></div>
                 </div>
               </div>
 
               <div>
-                <div className="flex justify-between text-sm text-zinc-300 mb-1">
+                <div className="flex justify-between text-sm text-muted-foreground mb-1">
                   <span>{form.team2}</span>
                   <span>{(prediction.prob_b * 100).toFixed(1)}%</span>
                 </div>
 
-                <div className="w-full bg-zinc-700 rounded-full h-3">
+                <div className="w-full bg-border rounded-full h-3">
                   <div
-                    className="bg-blue-500 h-3 rounded-full"
+                    className="bg-blue-500 h-3 rounded-full transition-all duration-500"
                     style={{ width: `${prediction.prob_b * 100}%` }}
                   ></div>
                 </div>
               </div>
             </div>
 
-            <div className="mt-5 text-center text-zinc-300">
+            <div className="mt-5 text-center text-muted-foreground">
               Confidence:
-              <span className="ml-2 text-white font-semibold">
+              <span className="ml-2 text-foreground font-semibold">
                 {Math.max(prediction.prob_a, prediction.prob_b) > 0.7
                   ? "High"
                   : "Medium"}
@@ -219,7 +219,7 @@ const Predictor = () => {
             {prediction.factors &&
               prediction.factors.length > 0 && (
                 <div className="mt-6">
-                  <h3 className="text-lg font-semibold text-white mb-3">
+                  <h3 className="text-lg font-semibold text-foreground mb-3">
                     Factors Considered
                   </h3>
 
@@ -227,13 +227,13 @@ const Predictor = () => {
                     {prediction.factors.map((factor, index) => (
                       <div
                         key={index}
-                        className="flex justify-between bg-zinc-900 p-3 rounded-lg"
+                        className="flex justify-between bg-background p-3 rounded-lg border border-border"
                       >
-                        <span className="text-zinc-300">
+                        <span className="text-muted-foreground">
                           {factor.label}
                         </span>
 
-                        <span className="text-white font-medium">
+                        <span className="text-foreground font-medium">
                           {(factor.weight * 100).toFixed(1)}%
                         </span>
                       </div>
