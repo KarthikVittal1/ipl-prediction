@@ -9,6 +9,8 @@ import requests
 import os
 import logging
 from typing import Optional, List, Dict
+from dotenv import load_dotenv
+load_dotenv()
 
 # Setup logging
 logging.basicConfig(level=logging.INFO)
@@ -36,9 +38,9 @@ async def global_exception_handler(request, exc):
     }
 
 # ====================== CONFIG ======================
-CRICKET_API_KEY = "04b00404-612b-4dc3-a26e-bd595ec18cad"
+CRICKET_API_KEY = os.getenv("CRICKET_API_KEY")
 CRICKET_BASE_URL = "https://api.cricapi.com/v1"
-WEATHER_API_KEY = "dc8a55539ec4b98fd07b14651ed24e5f"
+WEATHER_API_KEY = os.getenv("WEATHER_API_KEY")
 WEATHER_BASE_URL = "https://api.openweathermap.org/data/2.5"
 
 MODEL_DIR = os.path.join(os.path.dirname(__file__),"model")
@@ -102,10 +104,12 @@ class ModelUploadRequest(BaseModel):
 # ====================== HELPER FUNCTIONS ======================
 def call_cricket_api(endpoint: str, params: dict = None):
     if not CRICKET_API_KEY:
+        logger.error("CRICKET_API_KEY is None!")  # Add this
         return {"status": "error", "message": "API key not configured"}
     try:
         url = f"{CRICKET_BASE_URL}/{endpoint}"
         resp = requests.get(url, params={"apikey": CRICKET_API_KEY, **(params or {})}, timeout=10)
+        logger.info(f"CricAPI {endpoint} → {resp.status_code}: {resp.text[:200]}")  # Add this
         return resp.json()
     except Exception as e:
         logger.warning(f"External cricket API failed: {e}")
@@ -228,7 +232,7 @@ def normalize_external_match(match: dict) -> Optional[dict]:
     }
 
 def get_external_matches(limit: int = 20) -> List[dict]:
-    payload = call_cricket_api("currentMatches", {"offset": 0})
+    payload = call_cricket_api("matches", {"offset": 0})
     if payload.get("status") == "error" or not isinstance(payload.get("data"), list):
         return []
 
@@ -248,7 +252,7 @@ def get_external_matches(limit: int = 20) -> List[dict]:
 
 def get_external_live_matches() -> List[dict]:
     """Fetch live IPL matches with full score data from cricapi."""
-    payload = call_cricket_api("currentMatches", {"offset": 0})
+    payload = call_cricket_api("matches", {"offset": 0})
     if payload.get("status") == "error" or not isinstance(payload.get("data"), list):
         return []
 

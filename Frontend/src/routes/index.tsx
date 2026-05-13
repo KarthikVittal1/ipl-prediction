@@ -7,6 +7,7 @@ import { MatchCard } from "@/components/match-card";
 import { TeamLogo } from "@/components/team-logo";
 import { TEAMS } from "@/lib/team-logos";
 import Predictor from "@/components/predictor";
+import WeatherWidget from "@/components/WeatherWidget";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -113,7 +114,7 @@ function HomePage() {
           )}
         </div>
       </section>
-
+      <WeatherWidget />
       <div className="mx-auto max-w-7xl px-4 py-8">
         {/* Live */}
         <Section title="Live now" badge={live.length} accent>
